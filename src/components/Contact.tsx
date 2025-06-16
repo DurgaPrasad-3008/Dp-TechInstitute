@@ -43,7 +43,7 @@ const Contact = () => {
               +91 7731878344
             </a>
             <a
-              href="https://wa.me/1234567890?text=Hello%20DpTech%20Trainings%20I'm%20interested"
+              href="https://wa.me/8309214628?text=Hello%20DpTech%20Trainings%20I'm%20interested"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-300 hover:text-green-400 transition duration-300"
@@ -63,10 +63,10 @@ const Contact = () => {
               +91 7731878344
             </a>
             <a
-              href="tel:+918639057287"
+              href="tel:+918309214628"
               className="text-gray-300 hover:text-blue-400 transition duration-300"
             >
-              +91 8639057287
+              +91 8309214628
             </a>
           </div>
         </div>
