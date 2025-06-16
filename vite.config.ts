@@ -5,3 +5,5 @@ export default defineConfig({
   plugins: [react()],
   base: "/Dp-TechInstitute/", // <-- Change this to match your GitHub repo name
 });
+
+
