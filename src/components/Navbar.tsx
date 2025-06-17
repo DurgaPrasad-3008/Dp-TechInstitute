@@ -17,6 +17,8 @@ const Navbar = () => {
               className="w-10 h-10 object-contain rounded-full"
             />
 
+            <span className="text-xl font-bold text-white">DpTech Trainings</span>
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -34,7 +36,6 @@ const Navbar = () => {
               <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path>
             </svg>
 
-            <span className="text-xl font-bold text-white">DpTech Trainings</span>
           </div>
 
           {/* Desktop Menu */}

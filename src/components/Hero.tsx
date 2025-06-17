@@ -2,9 +2,11 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
+  const title = 'Empowering Future IT Professionals';
+
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="pt-20 relative min-h-screen flex items-center"
       style={{
         backgroundImage: 'url("https://wallpapercave.com/wp/wp7250087.jpg")',
@@ -13,16 +15,44 @@ const Hero = () => {
         backgroundRepeat: 'no-repeat'
       }}
     >
+      <style>
+        {`
+          @keyframes rainbowColor {
+            0% { color: #ff0080; }
+            14% { color: #ff8c00; }
+            28% { color: #ffff00; }
+            42% { color: #00ff00; }
+            57% { color: #00ffff; }
+            71% { color: #0000ff; }
+            85% { color: #8a2be2; }
+            100% { color: #ff0080; }
+          }
+        `}
+      </style>
+
       <div className="absolute inset-0 bg-black bg-opacity-75"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-8">
-            Empowering Future IT Professionals
+          <h1 className="text-4xl md:text-6xl font-bold mb-8">
+            {title.split('').map((char, index) => (
+              <span
+                key={index}
+                style={{
+                  display: 'inline-block',
+                  animation: 'rainbowColor 3s infinite',
+                  animationDelay: `${index * 0.1}s`
+                }}
+              >
+                {char}
+              </span>
+            ))}
           </h1>
+
           <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto">
-            DpTech Trainings is built to inspire, educate, and transform students into IT professionals. 
+            DpTech Trainings is built to inspire, educate, and transform students into IT professionals.
             We believe that with the right knowledge and guidance, anyone can achieve their dream career.
           </p>
+
           <div className="mb-24">
             <a
               href="https://wa.me/7731878344"
