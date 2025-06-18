@@ -60,7 +60,7 @@ function App() {
         aria-label="DP Custom Logo"
       >
         <img
-          src="public/images/dp-icon.jpg.jpg"
+          src="/Dp-TechInstitute/images/dp-logo11.jpg"
           alt="DP Logo"
           className="w-14 h-14 rounded-full object-cover"
         />
