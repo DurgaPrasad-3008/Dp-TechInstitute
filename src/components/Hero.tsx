@@ -33,20 +33,23 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black bg-opacity-75"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8">
+          <h1 className="text-3xl md:text-5xl font-bold mb-8 leading-snug">
             {title.split('').map((char, index) => (
               <span
                 key={index}
                 style={{
                   display: 'inline-block',
+                  marginRight: char === ' ' ? '0.35em' : '0',
                   animation: 'rainbowColor 3s infinite',
-                  animationDelay: `${index * 0.1}s`
+                  animationDelay: `${index * 0.1}s`,
+                  fontSize: '0.9em' // Slightly reduced font size
                 }}
               >
                 {char}
               </span>
             ))}
           </h1>
+
 
           <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto">
             DpTech Trainings is built to inspire, educate, and transform students into IT professionals.
