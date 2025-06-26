@@ -13,22 +13,23 @@ function App() {
   const tapTimeout = useRef(null);
   const tapCount = useRef(0);
 
-  const handleTap = () => {
-    tapCount.current += 1;
+ const handleTap = () => {
+  tapCount.current += 1;
 
-    if (tapCount.current === 2) {
-      // ✅ Double tap: open dialer
+  if (tapCount.current === 2) {
+    // ✅ Double tap: scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    clearTimeout(tapTimeout.current);
+    tapCount.current = 0;
+  } else {
+    // ✅ Single tap: open dialer
+    tapTimeout.current = setTimeout(() => {
       window.location.href = 'tel:7731878344';
-      clearTimeout(tapTimeout.current);
       tapCount.current = 0;
-    } else {
-      // ✅ Single tap: scroll to top
-      tapTimeout.current = setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        tapCount.current = 0;
-      }, 300); // 300ms wait for second tap
-    }
-  };
+    }, 300); // 300ms wait for second tap
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-white relative">
