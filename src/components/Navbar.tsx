@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import LoginModal from "./LoginModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   return (
     <nav className="bg-gray-900 shadow-md fixed w-full z-50">
@@ -44,6 +46,12 @@ const Navbar = () => {
             <a href="#courses" className="text-gray-300 hover:text-amber-400">Courses</a>
             <a href="#about" className="text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="text-gray-300 hover:text-amber-400">Contact</a>
+            <button
+              onClick={() => setIsLoginModalOpen(true)}
+              className="text-gray-300 hover:text-amber-400 transition-colors duration-200"
+            >
+              Login
+            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -66,9 +74,20 @@ const Navbar = () => {
             <a href="#courses" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Courses</a>
             <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Contact</a>
+            <button
+              onClick={() => setIsLoginModalOpen(true)}
+              className="block px-3 py-2 text-gray-300 hover:text-amber-400 w-full text-left"
+            >
+              Login
+            </button>
           </div>
         </div>
       )}
+      
+      <LoginModal 
+        isOpen={isLoginModalOpen} 
+        onClose={() => setIsLoginModalOpen(false)} 
+      />
     </nav>
   );
 };
