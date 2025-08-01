@@ -103,11 +103,11 @@ Thank you for registering with DpTech Trainings! 🚀`;
       {/* Modal */}
       <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white border-opacity-20 animate-modal-enter">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 bg-opacity-90 backdrop-blur-sm p-6 rounded-t-2xl border-b border-white border-opacity-20">
+        <div className="sticky top-0 bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-t-2xl border-b border-white border-opacity-20">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-bold text-white mb-1">Join DpTech Trainings</h2>
-              <p className="text-blue-100">Start your IT journey with us today!</p>
+              <p className="text-gray-200">Start your IT journey with us today!</p>
             </div>
             <button
               onClick={onClose}
