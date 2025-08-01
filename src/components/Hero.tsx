@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import RegistrationModal from './RegistrationModal';
 
 const Hero = () => {
   const title = 'Empowering Future IT Professionals';
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
     <section
@@ -57,10 +59,8 @@ const Hero = () => {
           </p>
 
           <div className="mb-24">
-            <a
-              href="https://wa.me/7731878344"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setIsModalOpen(true)}
               className="group relative inline-flex items-center px-8 py-4 text-lg font-medium rounded-md text-white bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600 md:text-xl transform hover:scale-105 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-blue-500/50"
             >
               <span className="absolute -inset-x-1 -inset-y-1 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -68,10 +68,15 @@ const Hero = () => {
                 Start Your IT Journey Today
                 <ArrowRight className="ml-2 h-6 w-6" />
               </span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
+      
+      <RegistrationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </section>
   );
 };
