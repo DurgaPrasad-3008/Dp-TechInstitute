@@ -47,6 +47,18 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose }
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Create student object
+    const studentData = {
+      id: Date.now().toString(),
+      ...formData,
+      registrationDate: new Date().toISOString()
+    };
+    
+    // Save to localStorage
+    const existingStudents = JSON.parse(localStorage.getItem('dptech_students') || '[]');
+    existingStudents.push(studentData);
+    localStorage.setItem('dptech_students', JSON.stringify(existingStudents));
+    
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 2000));
     

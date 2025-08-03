@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { X, Lock, User, Eye, EyeOff } from 'lucide-react';
+import Dashboard from './Dashboard';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -14,6 +15,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showDashboard, setShowDashboard] = useState(false);
 
   // Update showLoginForm when prop changes
   React.useEffect(() => {
@@ -40,11 +42,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
 
     if (username === decodedUsername && password === decodedPassword) {
       // Successful login
-      alert('Login Successful! Welcome, Owner.');
       onClose();
       setUsername('');
       setPassword('');
       setShowLoginForm(false);
+      setShowDashboard(true);
     } else {
       setError('Invalid credentials. Access denied.');
     }
@@ -68,7 +70,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm"
@@ -199,7 +202,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
           )}
         </div>
       </div>
-    </div>
+      </div>
+      
+      <Dashboard 
+        isOpen={showDashboard} 
+        onClose={() => setShowDashboard(false)} 
+      />
+    </>
   );
 };
 
