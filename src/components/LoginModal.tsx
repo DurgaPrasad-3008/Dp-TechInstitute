@@ -42,10 +42,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
 
     if (username === decodedUsername && password === decodedPassword) {
       // Successful login
-      onClose();
       setUsername('');
       setPassword('');
       setShowLoginForm(false);
+      onClose();
       setShowDashboard(true);
     } else {
       setError('Invalid credentials. Access denied.');
