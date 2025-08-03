@@ -1,10 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import LoginModal from "./LoginModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const clickCount = useRef(0);
+  const clickTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const handleLoginClick = () => {
+    clickCount.current += 1;
+
+    if (clickTimer.current) {
+      clearTimeout(clickTimer.current);
+    }
+
+    if (clickCount.current === 1) {
+      // Single click - show warning message
+      clickTimer.current = setTimeout(() => {
+        setIsLoginModalOpen(true);
+        setShowLoginForm(false);
+        clickCount.current = 0;
+      }, 300);
+    } else if (clickCount.current === 2) {
+      // Double click - show login form directly
+      setIsLoginModalOpen(true);
+      setShowLoginForm(true);
+      clickCount.current = 0;
+      if (clickTimer.current) {
+        clearTimeout(clickTimer.current);
+      }
+    }
+  };
 
   return (
     <nav className="bg-gray-900 shadow-md fixed w-full z-50">
@@ -47,7 +75,7 @@ const Navbar = () => {
             <a href="#about" className="text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="text-gray-300 hover:text-amber-400">Contact</a>
             <button
-              onClick={() => setIsLoginModalOpen(true)}
+              onClick={handleLoginClick}
               className="text-gray-300 hover:text-amber-400 transition-colors duration-200"
             >
               Login
@@ -75,7 +103,7 @@ const Navbar = () => {
             <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Contact</a>
             <button
-              onClick={() => setIsLoginModalOpen(true)}
+              onClick={handleLoginClick}
               className="block px-3 py-2 text-gray-300 hover:text-amber-400 w-full text-left"
             >
               Login
@@ -86,7 +114,11 @@ const Navbar = () => {
       
       <LoginModal 
         isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+        onClose={() => {
+          setIsLoginModalOpen(false);
+          setShowLoginForm(false);
+        }}
+        showLoginForm={showLoginForm}
       />
     </nav>
   );

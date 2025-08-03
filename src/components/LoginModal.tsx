@@ -4,46 +4,26 @@ import { X, Lock, User, Eye, EyeOff } from 'lucide-react';
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  showLoginForm?: boolean;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const [showLoginForm, setShowLoginForm] = useState(false);
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm: initialShowLoginForm = false }) => {
+  const [showLoginForm, setShowLoginForm] = useState(initialShowLoginForm);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
-  const clickCount = useRef(0);
-  const clickTimer = useRef<NodeJS.Timeout | null>(null);
+
+  // Update showLoginForm when prop changes
+  React.useEffect(() => {
+    setShowLoginForm(initialShowLoginForm);
+  }, [initialShowLoginForm]);
 
   // Encoded credentials (Base64 + custom encoding)
   const encodedCredentials = {
     username: 'UHV0dGFsYSBEdXJnYSBQcmFzYWQ=', // Base64 encoded
     password: 'MTIxNTMwQEFTVUQ=' // Base64 encoded
-  };
-
-  const handleLoginClick = () => {
-    clickCount.current += 1;
-
-    if (clickTimer.current) {
-      clearTimeout(clickTimer.current);
-    }
-
-    if (clickCount.current === 1) {
-      // Single click - show warning message
-      clickTimer.current = setTimeout(() => {
-        setShowLoginForm(false);
-        clickCount.current = 0;
-      }, 300);
-    } else if (clickCount.current === 2) {
-      // Double click - show login form
-      setShowLoginForm(true);
-      clickCount.current = 0;
-      if (clickTimer.current) {
-        clearTimeout(clickTimer.current);
-      }
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,10 +58,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     setPassword('');
     setError('');
     setShowPassword(false);
-    clickCount.current = 0;
-    if (clickTimer.current) {
-      clearTimeout(clickTimer.current);
-    }
   };
 
   const handleClose = () => {
@@ -139,14 +115,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               
               <div className="space-y-3">
                 <button
-                  onClick={handleLoginClick}
+                  onClick={() => setShowLoginForm(false)}
                   className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
                 >
                   I Understand
                 </button>
                 
                 <p className="text-xs text-gray-400 italic">
-                  Hint: Double-click if you're the owner
+                  Hint: Double-click on "Login" in navbar if you're the owner
                 </p>
               </div>
             </div>
