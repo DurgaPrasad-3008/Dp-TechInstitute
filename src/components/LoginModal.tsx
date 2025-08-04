@@ -44,9 +44,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
       // Successful login
       setUsername('');
       setPassword('');
+      // Don't close the modal immediately, let dashboard open first
       setShowDashboard(true);
-      setShowLoginForm(false);
-      onClose();
+      // Small delay to ensure dashboard opens before closing modal
+      setTimeout(() => {
+        setShowLoginForm(false);
+        onClose();
+      }, 100);
     } else {
       setError('Invalid credentials. Access denied.');
     }
@@ -206,7 +210,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, showLoginForm:
       
       <Dashboard 
         isOpen={showDashboard} 
-        onClose={() => setShowDashboard(false)} 
+        onClose={() => {
+          setShowDashboard(false);
+          resetModal();
+        }} 
       />
     </>
   );
