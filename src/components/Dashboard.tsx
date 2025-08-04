@@ -25,6 +25,40 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
   const [students, setStudents] = useState<Student[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout | null>(null);
+
+  // Reset inactivity timer
+  const resetInactivityTimer = () => {
+    if (inactivityTimer) {
+      clearTimeout(inactivityTimer);
+    }
+    
+    const timer = setTimeout(() => {
+      onClose();
+    }, 2 * 60 * 1000); // 2 minutes
+    
+    setInactivityTimer(timer);
+  };
+
+  // Start inactivity timer when dashboard opens
+  useEffect(() => {
+    if (isOpen) {
+      resetInactivityTimer();
+    }
+    
+    return () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+    };
+  }, [isOpen]);
+
+  // Reset timer on any user activity
+  const handleUserActivity = () => {
+    if (isOpen) {
+      resetInactivityTimer();
+    }
+  };
 
   useEffect(() => {
     // Load students from localStorage
@@ -101,7 +135,13 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
       {/* Backdrop */}
       
       {/* Dashboard Modal */}
-      <div className="relative w-full h-full overflow-hidden bg-white bg-opacity-5 backdrop-blur-lg shadow-2xl border-0 animate-modal-enter">
+      <div 
+        className="relative w-full h-full overflow-hidden bg-white bg-opacity-5 backdrop-blur-lg shadow-2xl border-0 animate-modal-enter"
+        onMouseMove={handleUserActivity}
+        onKeyDown={handleUserActivity}
+        onClick={handleUserActivity}
+        onScroll={handleUserActivity}
+      >
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
           <div className="flex items-center justify-between">
