@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Users, Calendar, Mail, Phone, MapPin, GraduationCap, Download, Search } from 'lucide-react';
+import { X, Users, Calendar, Mail, Phone, MapPin, GraduationCap, Download, Search, Trash2 } from 'lucide-react';
 
 interface Student {
   id: string;
@@ -26,6 +26,10 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<{ show: boolean; student: Student | null }>({
+    show: false,
+    student: null
+  });
 
   // Reset inactivity timer
   const resetInactivityTimer = () => {
@@ -116,6 +120,47 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
     document.body.removeChild(link);
   };
 
+  const handleDeleteClick = (student: Student) => {
+    setDeleteConfirm({ show: true, student });
+  };
+
+  const handleDeleteConfirm = () => {
+    if (!deleteConfirm.student) return;
+
+    const studentToDelete = deleteConfirm.student;
+    
+    // Remove from students array
+    const updatedStudents = students.filter(s => s.id !== studentToDelete.id);
+    setStudents(updatedStudents);
+    
+    // Update localStorage
+    localStorage.setItem('dptech_students', JSON.stringify(updatedStudents));
+    
+    // Create deleted data file and download
+    const deletedData = {
+      deletedAt: new Date().toISOString(),
+      deletedBy: 'Puttala Durga Prasad',
+      studentData: studentToDelete
+    };
+    
+    const jsonContent = JSON.stringify(deletedData, null, 2);
+    const blob = new Blob([jsonContent], { type: 'application/json' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `deleted_student_${studentToDelete.firstName}_${studentToDelete.lastName}_${new Date().toISOString().split('T')[0]}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Close confirmation dialog
+    setDeleteConfirm({ show: false, student: null });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteConfirm({ show: false, student: null });
+  };
   if (!isOpen) return null;
 
   return (
@@ -234,12 +279,13 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
                     <th className="px-6 py-4 text-left text-base font-semibold text-white">Course</th>
                     <th className="px-6 py-4 text-left text-base font-semibold text-white">Experience</th>
                     <th className="px-6 py-4 text-left text-base font-semibold text-white">Education</th>
+                    <th className="px-6 py-4 text-left text-base font-semibold text-white">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white divide-opacity-20">
                   {filteredStudents.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-6 py-12 text-center text-gray-200 text-lg">
+                      <td colSpan={7} className="px-6 py-12 text-center text-gray-200 text-lg">
                         {students.length === 0 ? 'No students registered yet.' : 'No students match your search.'}
                       </td>
                     </tr>
@@ -280,6 +326,15 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
                         <td className="px-6 py-4 text-base text-gray-200">
                           {student.education}
                         </td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => handleDeleteClick(student)}
+                            className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500 hover:bg-opacity-20 rounded-lg transition-all duration-200"
+                            title="Delete Student"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </td>
                       </tr>
                     ))
                   )}
@@ -289,6 +344,48 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm.show && deleteConfirm.student && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"></div>
+          <div className="relative bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl shadow-2xl border border-white border-opacity-30 p-8 max-w-md w-full animate-modal-enter">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-500 bg-opacity-20 mb-6">
+                <Trash2 className="h-8 w-8 text-red-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4">Delete Student</h3>
+              <p className="text-gray-200 mb-2">
+                Are you sure you want to delete this student?
+              </p>
+              <div className="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+                <p className="text-white font-semibold">
+                  {deleteConfirm.student.firstName} {deleteConfirm.student.lastName}
+                </p>
+                <p className="text-gray-300 text-sm">{deleteConfirm.student.email}</p>
+                <p className="text-gray-300 text-sm">{deleteConfirm.student.mobile}</p>
+              </div>
+              <p className="text-yellow-200 text-sm mb-6">
+                ⚠️ This action cannot be undone. The deleted data will be downloaded to your system.
+              </p>
+              <div className="flex space-x-4">
+                <button
+                  onClick={handleDeleteCancel}
+                  className="flex-1 px-6 py-3 text-gray-300 hover:text-white border border-gray-600 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteConfirm}
+                  className="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all duration-200"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
