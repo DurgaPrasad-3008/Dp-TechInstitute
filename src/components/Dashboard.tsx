@@ -128,7 +128,6 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
     };
 
     loadStudents();
-    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -238,6 +237,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
   const handleDeleteCancel = () => {
     setDeleteConfirm({ show: false, student: null });
   };
+  
   if (!isOpen) return null;
 
   return (
@@ -360,16 +360,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white divide-opacity-20">
-                  {isLoading ? (
-                    <tr>
-                      <td colSpan={7} className="px-6 py-12 text-center text-gray-200 text-lg">
-                        <div className="flex items-center justify-center">
-                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mr-3"></div>
-                          Loading students...
-                        </div>
-                      </td>
-                    </tr>
-                  ) : filteredStudents.length === 0 ? (
+                  {filteredStudents.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="px-6 py-12 text-center text-gray-200 text-lg">
                         {students.length === 0 ? 'No students registered yet.' : 'No students match your search.'}
