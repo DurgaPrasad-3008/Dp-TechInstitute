@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Benefits from './components/Benefits';
 import Courses from './components/Courses';
 import About from './components/About';
+import TrustSection from './components/TrustSection';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -39,6 +40,7 @@ function App() {
         <Benefits />
         <Courses />
         <About />
+        <TrustSection />
         <Contact />
       </main>
       <Footer />

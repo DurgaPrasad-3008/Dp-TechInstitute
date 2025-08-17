@@ -59,6 +59,7 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-400">
               <li>Email: dptechdeveloper77@gmail.com</li>
               <li>WhatsApp: +91 7731878344</li>
+              <li>Address: Nandigama, Hyderabad, Telangana</li>
             </ul>
           </div>
         </div>
