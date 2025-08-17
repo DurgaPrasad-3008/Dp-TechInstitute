@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, User, Mail, Phone, MapPin, GraduationCap, Calendar, Users } from 'lucide-react';
+import { supabase, Student } from '../lib/supabase';
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -47,23 +48,52 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose }
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Create student object
-    const studentData = {
-      id: Date.now().toString(),
-      ...formData,
-      registrationDate: new Date().toISOString()
-    };
-    
-    // Save to localStorage
-    const existingStudents = JSON.parse(localStorage.getItem('dptech_students') || '[]');
-    existingStudents.push(studentData);
-    localStorage.setItem('dptech_students', JSON.stringify(existingStudents));
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Create WhatsApp message
-    const message = `🎓 *New Student Registration - DpTech Trainings*
+    try {
+      // Create student object for database
+      const studentData: Student = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        mobile: formData.mobile,
+        gender: formData.gender,
+        address: formData.address,
+        education: formData.education,
+        date_of_birth: formData.dateOfBirth,
+        course: formData.course,
+        experience: formData.experience,
+        registration_date: new Date().toISOString()
+      };
+
+      // Try to save to Supabase database first
+      if (supabase) {
+        const { data, error } = await supabase
+          .from('students')
+          .insert([studentData])
+          .select()
+          .single();
+
+        if (error) {
+          console.error('Supabase error:', error);
+          throw error;
+        }
+
+        console.log('Student saved to database:', data);
+      } else {
+        // Fallback to localStorage if Supabase not configured
+        console.warn('Supabase not configured, using localStorage fallback');
+        const localStudentData = {
+          id: Date.now().toString(),
+          ...formData,
+          registrationDate: new Date().toISOString()
+        };
+        
+        const existingStudents = JSON.parse(localStorage.getItem('dptech_students') || '[]');
+        existingStudents.push(localStudentData);
+        localStorage.setItem('dptech_students', JSON.stringify(existingStudents));
+      }
+
+      // Create WhatsApp message
+      const message = `🎓 *New Student Registration - DpTech Trainings*
 
 👤 *Personal Details:*
 • Name: ${formData.firstName} ${formData.lastName}
@@ -81,25 +111,30 @@ const RegistrationModal: React.FC<RegistrationModalProps> = ({ isOpen, onClose }
 
 Thank you for registering with DpTech Trainings! 🚀`;
 
-    const whatsappUrl = `https://wa.me/7731878344?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    setIsSubmitting(false);
-    onClose();
-    
-    // Reset form
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      mobile: '',
-      gender: '',
-      address: '',
-      education: '',
-      dateOfBirth: '',
-      course: '',
-      experience: ''
-    });
+      const whatsappUrl = `https://wa.me/7731878344?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      // Success - close modal and reset form
+      onClose();
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        mobile: '',
+        gender: '',
+        address: '',
+        education: '',
+        dateOfBirth: '',
+        course: '',
+        experience: ''
+      });
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Registration failed. Please try again or contact us via WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen) return null;

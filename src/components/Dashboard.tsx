@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Users, Calendar, Mail, Phone, MapPin, GraduationCap, Download, Search, Trash2 } from 'lucide-react';
+import { supabase, Student as SupabaseStudent } from '../lib/supabase';
 
 interface Student {
   id: string;
@@ -30,6 +31,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
     show: false,
     student: null
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   // Reset inactivity timer
   const resetInactivityTimer = () => {
@@ -65,12 +67,67 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    // Load students from localStorage
-    const savedStudents = localStorage.getItem('dptech_students');
-    if (savedStudents) {
-      const parsedStudents = JSON.parse(savedStudents);
-      setStudents(parsedStudents);
-      setFilteredStudents(parsedStudents);
+    const loadStudents = async () => {
+      if (!isOpen) return;
+      
+      setIsLoading(true);
+      
+      try {
+        if (supabase) {
+          // Load from Supabase database
+          const { data, error } = await supabase
+            .from('students')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (error) {
+            console.error('Error loading students:', error);
+            throw error;
+          }
+
+          // Convert Supabase format to local format
+          const convertedStudents: Student[] = data.map((student: SupabaseStudent) => ({
+            id: student.id || '',
+            firstName: student.first_name,
+            lastName: student.last_name,
+            email: student.email,
+            mobile: student.mobile,
+            gender: student.gender,
+            address: student.address,
+            education: student.education,
+            dateOfBirth: student.date_of_birth,
+            course: student.course,
+            experience: student.experience,
+            registrationDate: student.registration_date || student.created_at || ''
+          }));
+
+          setStudents(convertedStudents);
+          setFilteredStudents(convertedStudents);
+        } else {
+          // Fallback to localStorage
+          console.warn('Supabase not configured, using localStorage');
+          const savedStudents = localStorage.getItem('dptech_students');
+          if (savedStudents) {
+            const parsedStudents = JSON.parse(savedStudents);
+            setStudents(parsedStudents);
+            setFilteredStudents(parsedStudents);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load students:', error);
+        // Fallback to localStorage on error
+        const savedStudents = localStorage.getItem('dptech_students');
+        if (savedStudents) {
+          const parsedStudents = JSON.parse(savedStudents);
+          setStudents(parsedStudents);
+          setFilteredStudents(parsedStudents);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadStudents();
     }
   }, [isOpen]);
 
@@ -124,35 +181,55 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
     setDeleteConfirm({ show: true, student });
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (!deleteConfirm.student) return;
 
     const studentToDelete = deleteConfirm.student;
     
-    // Remove from students array
-    const updatedStudents = students.filter(s => s.id !== studentToDelete.id);
-    setStudents(updatedStudents);
-    
-    // Update localStorage
-    localStorage.setItem('dptech_students', JSON.stringify(updatedStudents));
-    
-    // Create deleted data file and download
-    const deletedData = {
-      deletedAt: new Date().toISOString(),
-      deletedBy: 'Puttala Durga Prasad',
-      studentData: studentToDelete
-    };
-    
-    const jsonContent = JSON.stringify(deletedData, null, 2);
-    const blob = new Blob([jsonContent], { type: 'application/json' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `deleted_student_${studentToDelete.firstName}_${studentToDelete.lastName}_${new Date().toISOString().split('T')[0]}.json`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      if (supabase && studentToDelete.id) {
+        // Delete from Supabase database
+        const { error } = await supabase
+          .from('students')
+          .delete()
+          .eq('id', studentToDelete.id);
+
+        if (error) {
+          console.error('Error deleting student:', error);
+          throw error;
+        }
+      } else {
+        // Fallback: Remove from localStorage
+        const updatedStudents = students.filter(s => s.id !== studentToDelete.id);
+        localStorage.setItem('dptech_students', JSON.stringify(updatedStudents));
+      }
+
+      // Remove from local state
+      const updatedStudents = students.filter(s => s.id !== studentToDelete.id);
+      setStudents(updatedStudents);
+      
+      // Create deleted data file and download
+      const deletedData = {
+        deletedAt: new Date().toISOString(),
+        deletedBy: 'Puttala Durga Prasad',
+        studentData: studentToDelete
+      };
+      
+      const jsonContent = JSON.stringify(deletedData, null, 2);
+      const blob = new Blob([jsonContent], { type: 'application/json' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `deleted_student_${studentToDelete.firstName}_${studentToDelete.lastName}_${new Date().toISOString().split('T')[0]}.json`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+    } catch (error) {
+      console.error('Failed to delete student:', error);
+      alert('Failed to delete student. Please try again.');
+    }
     
     // Close confirmation dialog
     setDeleteConfirm({ show: false, student: null });
@@ -283,7 +360,16 @@ const Dashboard: React.FC<DashboardProps> = ({ isOpen, onClose }) => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white divide-opacity-20">
-                  {filteredStudents.length === 0 ? (
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan={7} className="px-6 py-12 text-center text-gray-200 text-lg">
+                        <div className="flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mr-3"></div>
+                          Loading students...
+                        </div>
+                      </td>
+                    </tr>
+                  ) : filteredStudents.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="px-6 py-12 text-center text-gray-200 text-lg">
                         {students.length === 0 ? 'No students registered yet.' : 'No students match your search.'}
