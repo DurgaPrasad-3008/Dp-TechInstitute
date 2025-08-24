@@ -76,9 +76,24 @@ const Navbar = () => {
             <a href="#contact" className="text-gray-300 hover:text-amber-400">Contact</a>
             <button
               onClick={handleLoginClick}
-              className="text-gray-300 hover:text-amber-400 transition-colors duration-200"
+              className="flex items-center text-gray-300 hover:text-amber-400 transition-colors duration-200"
             >
-              Login
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-shield-check mr-2"
+              >
+                <path d="M20 13c0 5-3.5 7.5-8 12.5a1 1 0 0 1-2 0C5.5 20.5 2 18 2 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.5-2.5a1 1 0 0 1 1 0C12.5 3.8 15 5 17 5a1 1 0 0 1 1 1z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+              Admin
             </button>
           </div>
 
@@ -104,9 +119,24 @@ const Navbar = () => {
             <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Contact</a>
             <button
               onClick={handleLoginClick}
-              className="block px-3 py-2 text-gray-300 hover:text-amber-400 w-full text-left"
+              className="flex items-center px-3 py-2 text-gray-300 hover:text-amber-400 w-full text-left"
             >
-              Login
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-shield-check mr-2"
+              >
+                <path d="M20 13c0 5-3.5 7.5-8 12.5a1 1 0 0 1-2 0C5.5 20.5 2 18 2 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.5-2.5a1 1 0 0 1 1 0C12.5 3.8 15 5 17 5a1 1 0 0 1 1 1z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+              Admin
             </button>
           </div>
         </div>

@@ -7,6 +7,7 @@ import Benefits from './components/Benefits';
 import Courses from './components/Courses';
 import About from './components/About';
 import TrustSection from './components/TrustSection';
+import FoundingBatchSection from './components/FoundingBatchSection';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -41,6 +42,7 @@ function App() {
         <Courses />
         <About />
         <TrustSection />
+        <FoundingBatchSection />
         <Contact />
       </main>
       <Footer />

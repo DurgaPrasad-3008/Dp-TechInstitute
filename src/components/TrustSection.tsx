@@ -107,33 +107,6 @@ const TrustSection = () => {
           ))}
         </div>
 
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 p-8 rounded-2xl shadow-2xl border border-white border-opacity-20">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              🎓 Be Among Our First Students!
-            </h3>
-            <p className="text-blue-100 mb-6 text-lg">
-              Register now and be part of our founding batch. Get exclusive benefits and personalized attention as we begin this exciting journey together.
-              <br />
-              <span className="font-semibold text-yellow-300">Early Bird Special: Up to 70% Discount for First 50 Students!</span>
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">✨ Founding Batch Benefits</span>
-              </div>
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">🏆 Exclusive Projects</span>
-              </div>
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">💼 Career Guidance</span>
-              </div>
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">🌟 Lifetime Support</span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
