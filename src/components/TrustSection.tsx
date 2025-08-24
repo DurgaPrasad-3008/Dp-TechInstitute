@@ -62,26 +62,27 @@ const TrustSection = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Why 10,000+ Students Trust DpTech Trainings
+            Why Choose DpTech Trainings for Your IT Career?
           </h2>
           <p className="text-xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
-            We don't just teach coding - we transform lives. Our comprehensive approach ensures you're not just 
-            job-ready, but <span className="text-blue-400 font-semibold">career-ready</span> for the dynamic IT industry.
+            Starting soon with a mission to transform aspiring IT professionals. We're committed to providing 
+            world-class online training with <span className="text-blue-400 font-semibold">personalized attention</span> 
+            and industry-focused curriculum from day one.
           </p>
           
           {/* Trust Indicators */}
           <div className="flex flex-wrap justify-center items-center gap-8 mt-8">
             <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
-              <span className="text-green-400 font-bold text-lg">✓ 100% Online</span>
+              <span className="text-green-400 font-bold text-lg">🚀 Launching Soon</span>
             </div>
             <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
               <span className="text-yellow-400 font-bold text-lg">🎯 Industry Focused</span>
             </div>
             <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
-              <span className="text-blue-400 font-bold text-lg">💰 Student Discounts</span>
+              <span className="text-blue-400 font-bold text-lg">💰 Early Bird Discounts</span>
             </div>
             <div className="bg-white bg-opacity-10 backdrop-blur-sm px-6 py-3 rounded-full">
-              <span className="text-purple-400 font-bold text-lg">🚀 Career Support</span>
+              <span className="text-purple-400 font-bold text-lg">👨‍🏫 Expert Mentorship</span>
             </div>
           </div>
         </div>
@@ -110,25 +111,25 @@ const TrustSection = () => {
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 p-8 rounded-2xl shadow-2xl border border-white border-opacity-20">
             <h3 className="text-2xl font-bold text-white mb-4">
-              🎓 Ready to Transform Your Career?
+              🎓 Be Among Our First Students!
             </h3>
             <p className="text-blue-100 mb-6 text-lg">
-              Join thousands of successful students who trusted DpTech Trainings for their IT career transformation.
+              Register now and be part of our founding batch. Get exclusive benefits and personalized attention as we begin this exciting journey together.
               <br />
-              <span className="font-semibold text-yellow-300">Limited Time: Up to 70% Student Discount Available!</span>
+              <span className="font-semibold text-yellow-300">Early Bird Special: Up to 70% Discount for First 50 Students!</span>
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">✨ Personal Mentorship</span>
+                <span className="text-white font-semibold">✨ Founding Batch Benefits</span>
               </div>
               <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">🏆 Industry Projects</span>
+                <span className="text-white font-semibold">🏆 Exclusive Projects</span>
               </div>
               <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">💼 Interview Preparation</span>
+                <span className="text-white font-semibold">💼 Career Guidance</span>
               </div>
               <div className="bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <span className="text-white font-semibold">🌟 Career Guidance</span>
+                <span className="text-white font-semibold">🌟 Lifetime Support</span>
               </div>
             </div>
           </div>
