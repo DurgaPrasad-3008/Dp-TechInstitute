@@ -37,13 +37,13 @@ const FoundingBatchSection = () => {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1461749280684-dccba630e2f6")',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1555099962-4199c345e5dd")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       ></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 bg-opacity-90 z-0"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
