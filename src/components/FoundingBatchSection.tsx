@@ -37,7 +37,7 @@ const FoundingBatchSection = () => {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f")',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1461749280684-dccba630e2f6")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
