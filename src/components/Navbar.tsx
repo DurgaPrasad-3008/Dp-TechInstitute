@@ -79,9 +79,7 @@ const Navbar = () => {
               onClick={handleLoginClick}
               className="flex items-center text-gray-300 hover:text-amber-400 transition-colors duration-200"
             >
-              <span className="text-xl mr-2">😎</span>
-              Boss
-            </button>
+              <span className="text-xl mr-2">😎</span>Boss</button>
           </div>
 
           {/* Mobile Menu Toggle */}
