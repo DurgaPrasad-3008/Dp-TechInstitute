@@ -34,6 +34,7 @@ const FoundingBatchSection = () => {
 
   return (
     <section className="py-20 relative">
+      <div id="founding-batch"></div>
       <div 
         className="absolute inset-0 z-0"
         style={{

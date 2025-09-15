@@ -72,28 +72,15 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#home" className="text-gray-300 hover:text-amber-400">Home</a>
             <a href="#courses" className="text-gray-300 hover:text-amber-400">Courses</a>
+            <a href="#founding-batch" className="text-gray-300 hover:text-amber-400">Offers</a>
             <a href="#about" className="text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="text-gray-300 hover:text-amber-400">Contact</a>
             <button
               onClick={handleLoginClick}
               className="flex items-center text-gray-300 hover:text-amber-400 transition-colors duration-200"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-shield-check mr-2"
-              >
-                <path d="M20 13c0 5-3.5 7.5-8 12.5a1 1 0 0 1-2 0C5.5 20.5 2 18 2 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.5-2.5a1 1 0 0 1 1 0C12.5 3.8 15 5 17 5a1 1 0 0 1 1 1z"></path>
-                <path d="m9 12 2 2 4-4"></path>
-              </svg>
-              Admin
+              <span className="text-xl mr-2">😎</span>
+              Boss
             </button>
           </div>
 
@@ -115,28 +102,15 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#home" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Home</a>
             <a href="#courses" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Courses</a>
+            <a href="#founding-batch" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Offers</a>
             <a href="#about" className="block px-3 py-2 text-gray-300 hover:text-amber-400">About</a>
             <a href="#contact" className="block px-3 py-2 text-gray-300 hover:text-amber-400">Contact</a>
             <button
               onClick={handleLoginClick}
               className="flex items-center px-3 py-2 text-gray-300 hover:text-amber-400 w-full text-left"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-shield-check mr-2"
-              >
-                <path d="M20 13c0 5-3.5 7.5-8 12.5a1 1 0 0 1-2 0C5.5 20.5 2 18 2 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.5-2.5a1 1 0 0 1 1 0C12.5 3.8 15 5 17 5a1 1 0 0 1 1 1z"></path>
-                <path d="m9 12 2 2 4-4"></path>
-              </svg>
-              Admin
+              <span className="text-xl mr-2">😎</span>
+              Boss
             </button>
           </div>
         </div>
