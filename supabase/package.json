@@ -1,0 +1,30 @@
+{
+  "name": "dptech-trainings-supabase",
+  "version": "1.0.0",
+  "description": "Supabase configuration and database setup for DpTech Trainings",
+  "scripts": {
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push",
+    "db:pull": "supabase db pull",
+    "studio": "supabase studio",
+    "types:generate": "supabase gen types typescript --local > ../src/types/database.types.ts",
+    "migration:new": "supabase migration new",
+    "seed": "supabase db reset --with-seed"
+  },
+  "keywords": [
+    "supabase",
+    "database",
+    "dptech",
+    "trainings",
+    "java",
+    "education"
+  ],
+  "author": "Puttala Durga Prasad",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DurgaPrasad-3008/Dp-TechInstitute"
+  }
+}

@@ -1,0 +1,10 @@
+# Supabase
+.branches
+.temp
+.env.local
+.env.example
+docker-compose.yml
+postgres_data/
+
+# Local Supabase files
+.supabase/
